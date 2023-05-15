@@ -1,0 +1,7 @@
+<section class="cart_container">
+  <h1>Cart</h1>
+  <h3>Products</h3>
+  {{#each products}}
+    <p>{{this.product.title}} - ${{this.product.price}} x {{this.quantity}} Unidades</p>
+  {{/each}}
+</section>
