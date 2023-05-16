@@ -3,6 +3,8 @@ import { dirname } from "path";
 import multer from "multer";
 
 const PORT = 8080;
+const DB_USER = "leandroafernandez";
+const DB_PASS = "9WHsfQFziAzUm2LX";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,4 +20,4 @@ const storage = multer.diskStorage({
 
 const uploader = multer({ storage });
 
-export { __dirname, PORT, uploader };
+export { __dirname, PORT, uploader, DB_USER, DB_PASS };
