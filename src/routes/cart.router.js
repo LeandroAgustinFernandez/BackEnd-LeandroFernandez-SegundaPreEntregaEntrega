@@ -1,12 +1,11 @@
 import { Router } from "express";
 import CartManager from "../dao/MongoDbManagers/CartManager.js";
-const router = Router();
 
+const router = Router();
 const cartManager = new CartManager();
 
-// Devuelve un cart especifico
 router.get("/:cid", async (request, response) => {
-  let { cid } = request.params;
+  const { cid } = request.params;
   let res = await cartManager.getCart(cid);
   res?.error
     ? response.status(404).send({ res })
@@ -15,14 +14,13 @@ router.get("/:cid", async (request, response) => {
 
 router.post("/", async (request, response) => {
   let res = await cartManager.addCart();
-  console.log(res);
   res?.error
     ? response.status(404).send({ status: res.error })
     : response.send({ status: `The cart was created succesfully.`, payload: res });
 });
 
 router.post("/:cid/products/:pid", async (request, response) => {
-  let { cid, pid } = request.params;
+  const { cid, pid } = request.params;
   let res = await cartManager.addProductToCart(cid, pid);
   res?.error
     ? response.status(400).send({ ...res })

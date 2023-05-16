@@ -19,7 +19,7 @@ router.get("/products", async (request, response) => {
   if (sort) urlParams += `sort=${sort}&`;
   pag.prevLink = pag.hasPrevPage ? `${urlParams}page=${pag.prevPage}` : null;
   pag.nextLink = pag.hasNextPage ? `${urlParams}page=${pag.nextPage}` : null;
-  response.render("products", { error: docs === undefined, products: docs, pag, title: "Products", style: "home" });
+  response.render("products", { error: docs === undefined, products: docs, pag, title: "Products", style: "home", sort, query });
 });
 
 router.get('/product/:pid',async (request,response)=>{
@@ -35,8 +35,7 @@ router.get("/newproduct", async (request, response) => {
 
 router.get("/carts/:cid", async (request, response) => {
   let { cid } = request.params
-  let cart = await cartManager.getCart(cid)
-  let { products, _id } = cart
+  let { products, _id } = await cartManager.getCart(cid)
   response.render("carts", {title: "Products", style: "home", products ,_id});
 });
 

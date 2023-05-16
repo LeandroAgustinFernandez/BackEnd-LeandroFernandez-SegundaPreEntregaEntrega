@@ -53,3 +53,17 @@
  
 <script src="/js/helpers.js"></script>
 <script src="/js/index.js"></script>
+
+<script>
+  const category = '{{query}}'
+  const price = '{{sort}}'
+  function selectedInput(key, filter){
+    const elementList = document.getElementById(key);
+    const listOptions = [...elementList.options];
+    listOptions.forEach((option) => {
+      if(option.value == filter) option.setAttribute('selected',true);
+    });
+  }
+  selectedInput('query',category)
+  selectedInput('sort',price)
+</script>

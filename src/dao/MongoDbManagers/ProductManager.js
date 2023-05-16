@@ -7,9 +7,7 @@ export default class ProductManager {
       if (isNaN(page)) throw new Error(`La pagina especificada no existe`);
       let options = { lean: true, limit: limit || 10, page };
       if (sort) options.sort = { price: sort };
-      let queryObj = query
-        ? { category: { $regex: query, $options: "i" } }
-        : {};
+      let queryObj = query ? { category: { $regex: query, $options: "i" } } : {};
       let products = await productModel.paginate(queryObj, options);
       if (page > products.totalPages || page <= 0 )
       throw new Error(`La pagina especificada no existe`);
@@ -36,10 +34,7 @@ export default class ProductManager {
       if (await this.#checkIfCodeExists(product.code))
         throw new Error(`The product code already exists.`);
       let result = await productModel.create(product);
-      return {
-        success: `The product was successfully added.`,
-        payload: result,
-      };
+      return { success: `The product was successfully added.`, payload: result };
     } catch (error) {
       return { error: `${error.message}` };
     }
@@ -59,10 +54,7 @@ export default class ProductManager {
   async deleteProduct(id) {
     try {
       let result = await productModel.deleteOne({ _id: id });
-      return {
-        success: `The product was successfully removed`,
-        payload: result,
-      };
+      return { success: `The product was successfully removed`, payload: result };
     } catch (error) {
       return { error: `${error.message}` };
     }

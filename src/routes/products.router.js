@@ -3,7 +3,6 @@ import ProductManager from "../dao/MongoDbManagers/ProductManager.js";
 import { uploader } from "../utils.js";
 
 const router = Router();
-
 const productManager = new ProductManager();
 
 router.get("/", async (request, response) => {
@@ -21,7 +20,7 @@ router.get("/", async (request, response) => {
 });
 
 router.get("/:pid", async (request, response) => {
-  let { pid } = request.params;
+  const { pid } = request.params;
   let res = await productManager.getProductById(pid);
   res?.error
     ? response.status(404).send({ status:`error`, ...res })
@@ -29,11 +28,11 @@ router.get("/:pid", async (request, response) => {
 });
 
 router.post("/", uploader.array("thumbnails"), async (request, response) => {
+  const io = request.app.get("socketio");
   const { files, body } = request;
   let product = { ...body, status: true };
   let thumbnails = files.map((file) => file.originalname);
   product.thumbnails = thumbnails;
-  const io = request.app.get("socketio");
   let res = await productManager.addProduct(product);
   let res2 = await productManager.getProducts();
   response.send(res);
